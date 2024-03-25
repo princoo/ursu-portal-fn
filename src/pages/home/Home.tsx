@@ -1,5 +1,6 @@
 import studentHome from '/images/studentsHome.png';
 import staffHome from '/images/staffHome.jpg';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -10,7 +11,7 @@ export default function Home() {
           className="absolute top-0 left-0 min-h-full ob w-full  object-cover"
           alt=""
         />
-        <div className="t racking-wider relative z-20 max-w-screen-lg mx-auto flex  h-full items-center">
+        <div className="tracking-wider relative z-20 max-w-screen-lg mx-auto flex  h-full items-center">
           <div className="md:w-1/2 w-full">
             <h1 className="text-white font-extrabold text-5xl mb-8">
               Dynamic academic community, Where innovation meets excellence!
@@ -19,9 +20,11 @@ export default function Home() {
               Dive into a world of endless possibilities with our esteemed faculty and staff who are
               dedicated to nurturing brilliance and shaping future leaders
             </p>
-            <button className="mt-8 text-white uppercase py-4 text-base font-light px-10 border border-white hover:bg-white hover:bg-opacity-10 rounded-xl">
-              Get started
-            </button>
+            <Link to={'/access'}>
+              <button className="mt-8 text-white uppercase py-4 text-base font-light px-10 border border-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                Get started
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -63,9 +66,11 @@ export default function Home() {
                 students to thrive in a nurturing environment. Join our community and experience the
                 difference of personalized care and boundless opportunities.
               </p>
-              <button className="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10 rounded-xl">
-                Talk with staff
-              </button>
+              <Link to={'about'}>
+                <button className="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10 rounded-xl">
+                  Meet the staff
+                </button>
+              </Link>
             </div>
           </div>
         </div>
