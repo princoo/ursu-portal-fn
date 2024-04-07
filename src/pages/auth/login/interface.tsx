@@ -1,4 +1,9 @@
 export interface ValuesType {
-  regNo: string;
+  regN: string;
   password: string;
+}
+export interface LoginInitials {
+  loading: boolean;
+  value: string | null;
+  error: string | null;
 }

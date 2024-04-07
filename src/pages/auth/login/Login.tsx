@@ -1,16 +1,28 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { InputWithLabel } from '../../../components/Input';
 import { useFormik } from 'formik';
 import { ValuesType } from './interface';
 import { validationSchema } from './schema/LoginSchema';
 import ErrorDiv from '../../../components/ErrorDiv';
 import { Button } from '../../../components/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GoQuestion } from 'react-icons/go';
+import { useLogIn } from './redux/hooks';
+import { useAppSelector } from '../../../redux/hooks';
 
 export default function Login() {
+  const { loading, value } = useAppSelector((state) => state.logIn);
+  const { handleLogIn } = useLogIn();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (value) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate, value]);
+
   const handleSubmit = (values: ValuesType) => {
-    // console.log(values);
+    handleLogIn(values);
     return values;
   };
   const handleFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +31,7 @@ export default function Login() {
   };
   const formik = useFormik({
     initialValues: {
-      regNo: '',
+      regN: '',
       password: '',
     },
     validationSchema,
@@ -34,13 +46,13 @@ export default function Login() {
           <InputWithLabel
             label="Reg Number"
             type="text"
-            name="regNo"
-            id="regNo"
+            name="regN"
+            id="regN"
             placeholder="Enter reg number"
-            value={formik.values.regNo}
+            value={formik.values.regN}
             onChange={handleFieldChange}
           />
-          {formik.touched.regNo && formik.errors.regNo && <ErrorDiv error={formik.errors.regNo} />}
+          {formik.touched.regN && formik.errors.regN && <ErrorDiv error={formik.errors.regN} />}
         </div>
         <div className="flex flex-col gap-2 flex-grow mb-4">
           <InputWithLabel
@@ -62,7 +74,7 @@ export default function Login() {
             <ErrorDiv error={formik.errors.password} />
           )}
         </div>
-        <Button type="submit" loading_state={false} text="Sign In" color="primary" />
+        <Button type="submit" loading_state={loading} text="Sign In" color="primary" />
       </form>
     </div>
   );

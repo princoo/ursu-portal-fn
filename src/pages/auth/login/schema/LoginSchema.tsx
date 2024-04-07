@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{6,}$/;
 
 export const validationSchema = Yup.object().shape({
-  regNo: Yup.string()
+  regN: Yup.string()
     .matches(/^[0-9]+$/, 'Invalid reg number')
     .min(9, 'Reg number must be at least 9 digits')
     .max(9, 'Reg number must not exceed 9 digits')

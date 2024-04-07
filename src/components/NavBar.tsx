@@ -1,7 +1,28 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import urLogo from '/images/urLogo.png';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { isLoggedIn } from '../utils/auth';
+import { FaRegCircleUser } from 'react-icons/fa6';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { clearToken } from '../redux/slices/tokenSlice';
 
 export default function NavBar() {
+  const { value } = useAppSelector((state) => state.token);
+  const dispatch = useAppDispatch();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogOut = () => {
+    dispatch(clearToken());
+    handleClose();
+  };
   const items = [
     {
       link: 'Home',
@@ -15,10 +36,7 @@ export default function NavBar() {
       link: 'About us',
       to: '/about',
     },
-    {
-      link: 'Sign in',
-      to: '/access',
-    },
+    ...(value ? [] : [{ link: 'Sign in', to: '/access' }]),
   ];
   return (
     <div className="flex justify-between p-4 border-b-2">
@@ -38,6 +56,31 @@ export default function NavBar() {
             </Link>
           );
         })}
+        {isLoggedIn() && (
+          <button
+            id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+            className="hover:text-blue-500 transition-all duration-100 ease-in-out self-center"
+          >
+            <span className="text-xl text-gra-600">
+              <FaRegCircleUser />
+            </span>
+          </button>
+        )}
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+        </Menu>
       </div>
     </div>
   );
